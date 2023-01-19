@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Constants {
+    static let apiKey = "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"
+}
