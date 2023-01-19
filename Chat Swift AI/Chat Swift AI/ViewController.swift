@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     private let textField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Type in your query here"
+        textField.placeholder = " Type in your query here"
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .lightGray
         textField.returnKeyType = .done
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             textField.heightAnchor.constraint(equalToConstant: 50),
             textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             textField.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor),
             
             table.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -70,8 +70,12 @@ extension ViewController: UITableViewDataSource, UITextFieldDelegate {
         return cell
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = "  "
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let text = textField.text, !text.isEmpty {
+        if let text = textField.text, !text.isEmpty, !text.replacingOccurrences(of: " ", with: "").isEmpty {
             models.append(text)
         }
         return true
