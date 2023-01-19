@@ -19,10 +19,10 @@ final class ChatAIService {
     }
     
     func getResponsefromAI(for input: String, completion: @escaping (Result<String, Error>) -> Void){
-        client?.sendCompletion(with: input, completionHandler: { result in
+        client?.sendCompletion(with: input, maxTokens: 500, completionHandler: { result in
             switch result {
             case .success(let result):
-                let output = result.choices.first?.text ?? ""
+                let output = (result.choices.first?.text)?.replacingOccurrences(of: "\n\n", with: "\n") ?? ""
                 completion(.success(output))
             case .failure(let error):
                 completion(.failure(error))
